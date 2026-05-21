@@ -16,7 +16,7 @@ public class SessionService {
 
     /* CookieからセッションIDを取得、なければ新規発行してレスポンスにセット */
 
-    public String resolveSessionID(HttpServletRequest request, HttpServletResponse response) {
+    public String resolveSessionId(HttpServletRequest request, HttpServletResponse response) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             return Arrays.stream(cookies)
