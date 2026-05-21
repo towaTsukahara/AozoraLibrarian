@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-AozoraLibrarianApplication<aozora-librarian>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.skywill.aozoralibrarian.AozoraLibrarianApplication",
+            "projectName": "aozora-librarian",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

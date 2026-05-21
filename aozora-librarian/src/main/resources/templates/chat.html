@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>青空図書館</title>
+    <style>
+        body {
+            font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f5f0e6;
+            color: #2c2416;
+            line-height: 1.7;
+        }
+        h1 {
+            text-align: center;
+            font-weight: normal;
+            border-bottom: 1px solid #8b7355;
+            padding-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #6b5d4a;
+            font-size: 0.9em;
+            margin-bottom: 30px;
+        }
+        .message-box {
+            background: #fffdf8;
+            border-left: 4px solid #8b7355;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .user-message {
+            border-left-color: #5d8aa8;
+        }
+        .label {
+            font-size: 0.85em;
+            color: #8b7355;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .user-message .label {
+            color: #5d8aa8;
+        }
+        .content {
+            white-space: pre-wrap;
+        }
+        form {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 10px;
+            border: 1px solid #8b7355;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1em;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+        button {
+            padding: 10px 20px;
+            background: #8b7355;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            cursor: pointer;
+            align-self: flex-end;
+        }
+        button:hover {
+            background: #6b5d4a;
+        }
+    </style>
+</head>
+<body>
+    <h1>青空図書館</h1>
+    <p class="subtitle">― 司書とともに、一冊の本を探す ―</p>
+
+    <!-- 直前のやり取りを表示（POST後のみ） -->
+    <div th:if="${userMessage}" class="message-box user-message">
+        <div class="label">あなた</div>
+        <div class="content" th:text="${userMessage}"></div>
+    </div>
+
+    <div th:if="${librarianResponse}" class="message-box">
+        <div class="label">司書</div>
+        <div class="content" th:text="${librarianResponse}"></div>
+    </div>
+
+    <!-- 入力フォーム -->
+    <form action="/chat" method="post">
+        <label for="message">司書に話しかける：</label>
+        <textarea id="message" name="message" placeholder="お探しの本はありますか？" required></textarea>
+        <button type="submit">送信</button>
+    </form>
+</body>
+</html>
