@@ -8,6 +8,11 @@ import com.skywill.aozoralibrarian.infrastructure.persistence.ConversationReposi
 import com.skywill.aozoralibrarian.infrastructure.persistence.MessageRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
+import java.util.Collections;
+import java.util.List;
 
 @Service
 public class ConversationService {
@@ -40,5 +45,23 @@ public class ConversationService {
         message.setRole(role);
         message.setContent(content);
         return messageRepository.save(message);
+    }
+
+    // 直近の会話を古い順で進める
+    @Transactional(readOnly = true)
+    public List<Message> findRecentMessages(Long conversationId, int limit) {
+        Pageable pageable = PageRequest.of(0, limit);
+        List<Message> recentDesc = messageRepository.findRecentByConversationId(conversationId, pageable);
+        Collections.reverse(recentDesc);
+        return recentDesc;
+    }
+
+    // 会話のメッセージを古い順で取得
+    @Transactional(readOnly = true)
+    public List<Message> findAllMessages(Long conversationId) {
+        Pageable  pageable = PageRequest.of(0, Integer.MAX_VALUE);
+        List<Message> messageDesc = messageRepository.findRecentByConversationId(conversationId, pageable);
+        Collections.reverse(messageDesc);
+        return messageDesc;
     }
 }
