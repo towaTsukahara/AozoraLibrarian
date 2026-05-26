@@ -28,6 +28,18 @@ public class SessionService {
         return issueNewSessionId(response);
     }
 
+    public String getSessionIdIfExists(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+    if (cookies == null){
+        return null;
+    }
+    return Arrays.stream(cookies)
+            .filter(c -> COOKIE_NAME.equals(c.getName()))
+            .map(Cookie::getValue)
+            .findFirst()
+            .orElse(null);
+    }
+
     public String issueNewSessionId(HttpServletResponse response) {
         String newSessionId = UUID.randomUUID().toString();
         Cookie cookie = new Cookie(COOKIE_NAME, newSessionId);
